@@ -17,7 +17,8 @@
       "applicationUrl": "http://localhost:5100",
       "environmentVariables": {
         "ASPNET_ENVIRONMENT": "Development",
-        "ASPNET_SECRET_KEY": "z2x*f!eti-&gv1jrz&(&dwn8jzeu96vv_5fe6mxn!&fi1dmzh3"
+        "ASPNET_SECRET_KEY": "z2x*f!eti-&gv1jrz&(&dwn8jzeu96vv_5fe6mxn!&fi1dmzh3",
+        "ASPNET_CONNECTION_STRING": "Server=localhost;Port=3306;Database=MyTaskBoard;Uid=root;Pwd=1234;persistsecurityinfo=true;convertzerodatetime=true"
       }
     },
     "https": {
@@ -47,7 +48,7 @@
       "environmentVariables": {
         "ASPNET_ENVIRONMENT": "Development",
         "ASPNET_SECRET_KEY": "z2x*f!eti-&gv1jrz&(&dwn8jzeu96vv_5fe6mxn!&fi1dmzh3",
-        "ASPNET_PORT": "5100"
+        "ASPNET_CONNECTION_STRING": "Server=localhost;Port=3306;Database=MyTaskBoard;Uid=root;Pwd=1234;persistsecurityinfo=true;convertzerodatetime=true"
       }
     }
   }

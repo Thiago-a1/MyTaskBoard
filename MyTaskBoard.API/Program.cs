@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http.Headers;
+using MyTaskBoard.API.Routes;
 using MyTaskBoard.API.Services;
 using MyTaskBoard.TokenService;
 
@@ -11,6 +13,9 @@ builder.Services.AddSwaggerService();
 
 //Configura JWT
 builder.Services.AddServiceToken(builder.Configuration);
+
+//Services
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
@@ -30,7 +35,7 @@ if (app.Environment.IsDevelopment())
 
 //app.UseHttpsRedirection();
 
-app.MapGet("/User", () => "hello world");
+UserRoutes.MapUserRoutes(app);
 
 if (app.Environment.IsDevelopment())
 {
