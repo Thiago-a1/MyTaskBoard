@@ -13,7 +13,6 @@ public static class TokenService
     {
         service.AddServiceAuthenticator(configuration);
         service.AddServiceAuthorization();
-
     }
 
     public static void AddServiceAuthenticator(this IServiceCollection services, IConfiguration configuration)
@@ -49,12 +48,5 @@ public static class TokenService
     {
         app.UseAuthentication();
         app.UseAuthorization();
-    }
-
-    public static Guid TakeIdByToken(string JWTToken)
-    {
-        var token = new JwtSecurityTokenHandler().ReadJwtToken(JWTToken);
-
-        return Guid.Parse(token.Claims.First(token => token.Type == "Id").Value);
     }
 }
