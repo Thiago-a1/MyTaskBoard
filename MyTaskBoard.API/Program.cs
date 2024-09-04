@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http.Headers;
+using MySqlX.XDevAPI.Common;
 using MyTaskBoard.API.Routes;
 using MyTaskBoard.API.Services;
 using MyTaskBoard.TokenService;
@@ -16,6 +17,7 @@ builder.Services.AddServiceToken(builder.Configuration);
 
 //Services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 
 var app = builder.Build();
 
@@ -36,6 +38,7 @@ if (app.Environment.IsDevelopment())
 //app.UseHttpsRedirection();
 
 UserRoutes.MapUserRoutes(app);
+AuthRoutes.MapAuthRoutes(app);
 
 if (app.Environment.IsDevelopment())
 {
