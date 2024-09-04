@@ -9,7 +9,7 @@ public class TokenRepository
 {
     public static object GenerateToken(string Id, string LoginType)
     {
-        var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("ASPNETCORE_SECRET_KEY")!);
+        var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("ASPNET_SECRET_KEY")!);
         var tokenConfig = new SecurityTokenDescriptor
         {
             Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
