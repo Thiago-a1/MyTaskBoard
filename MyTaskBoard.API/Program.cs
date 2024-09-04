@@ -17,6 +17,7 @@ builder.Services.AddServiceToken(builder.Configuration);
 
 //Services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBoardRepository, BoardRepository>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 
 var app = builder.Build();
@@ -39,6 +40,7 @@ if (app.Environment.IsDevelopment())
 
 UserRoutes.MapUserRoutes(app);
 AuthRoutes.MapAuthRoutes(app);
+BoardRoutes.MapBoardRoutes(app);
 
 if (app.Environment.IsDevelopment())
 {
