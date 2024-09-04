@@ -55,6 +55,7 @@ public static class UserRoutes
 
             return response.Status == true ? Results.Accepted(string.Empty, response) : Results.BadRequest();
         })
+            .RequireAuthorization("user")
             .Produces<ResponseModel<string>>(StatusCodes.Status202Accepted)
             .Produces(StatusCodes.Status400BadRequest)
             .WithTags("User")
