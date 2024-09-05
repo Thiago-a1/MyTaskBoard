@@ -24,7 +24,7 @@ public static class UserRoutes
 
             var response = await _service.GetUserById(Id);
 
-            return response.Status == true ? Results.Ok(response) : Results.BadRequest();
+            return response.Status == true ? Results.Ok(response) : Results.BadRequest(response);
         })
             .Produces<ResponseModel<GetUserResponse>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
@@ -40,7 +40,7 @@ public static class UserRoutes
 
             var response = await _service.CreateUser(request);
 
-            return response.Status == true ? Results.Created(string.Empty, response) : Results.BadRequest();
+            return response.Status == true ? Results.Created(string.Empty, response) : Results.BadRequest(response);
         })
             .Produces<ResponseModel<CreateUserResponse>>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
@@ -53,12 +53,12 @@ public static class UserRoutes
 
             var response = await _service.DeleteUser(Token);
 
-            return response.Status == true ? Results.Accepted(string.Empty, response) : Results.BadRequest();
+            return response.Status == true ? Results.Accepted(string.Empty, response) : Results.BadRequest(response);
         })
             .RequireAuthorization("user")
             .Produces<ResponseModel<string>>(StatusCodes.Status202Accepted)
             .Produces(StatusCodes.Status400BadRequest)
             .WithTags("User")
-            .WithSummary("Excluir o usuario logado.");
+            .WithSummary("Exclui o usuario logado.");
     }
 }

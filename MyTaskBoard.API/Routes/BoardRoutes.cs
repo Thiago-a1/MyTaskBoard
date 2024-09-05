@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.Headers;
+using MiniValidation;
 using MyTaskBoard.API.DTOs.Requests;
 using MyTaskBoard.API.DTOs.Responses;
 using MyTaskBoard.API.Models;
@@ -27,11 +28,16 @@ public static class BoardRoutes
 
         app.MapPost("/Board", async (HttpRequest requestHeaders, CreateBoardRequest request, IBoardRepository _service) =>
         {
+            if (!MiniValidator.TryValidate(request, out var errors))
+            {
+                return Results.ValidationProblem(errors);
+            }
+
             string Token = requestHeaders.Headers.Authorization.ToString()["Bearer ".Length..];
 
             var response = await _service.CreateBoard(Token, request);
 
-            return response.Status ? Results.Created(string.Empty, response) : Results.BadRequest();
+            return response.Status ? Results.Created(string.Empty, response) : Results.BadRequest(response);
         })
             .RequireAuthorization("user")
             .Produces<ResponseModel<CreateBoardResponse>>(StatusCodes.Status201Created)
@@ -41,11 +47,16 @@ public static class BoardRoutes
 
         app.MapPatch("/Board/{boardId}", async (HttpRequest requestHeaders, int boardId, UpdateBoardRequest request, IBoardRepository _service) =>
         {
+            if (!MiniValidator.TryValidate(request, out var errors))
+            {
+                return Results.ValidationProblem(errors);
+            }
+
             string Token = requestHeaders.Headers.Authorization.ToString()["Bearer ".Length..];
 
             var response = await _service.UpdateBoard(Token, boardId, request);
 
-            return response.Status ? Results.Ok(response) : Results.BadRequest();
+            return response.Status ? Results.Ok(response) : Results.BadRequest(response);
         })
             .RequireAuthorization("user")
             .Produces<ResponseModel<UpdateBoardResponse>>(StatusCodes.Status200OK)
@@ -59,7 +70,7 @@ public static class BoardRoutes
 
             var response = await _service.DeleteBoard(Token, boardId);
 
-            return response.Status ? Results.Accepted(string.Empty, response) : Results.BadRequest();
+            return response.Status ? Results.Accepted(string.Empty, response) : Results.BadRequest(response);
         })
             .RequireAuthorization("user")
             .Produces<ResponseModel<string>>(StatusCodes.Status202Accepted)
