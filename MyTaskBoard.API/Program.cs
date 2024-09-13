@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Http.Headers;
-using MySqlX.XDevAPI.Common;
 using MyTaskBoard.API.Routes;
 using MyTaskBoard.API.Services;
 using MyTaskBoard.TokenService;
@@ -8,6 +6,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+//cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:4200")
+                   .WithHeaders("content-type")
+                   .AllowAnyOrigin()
+                   .AllowAnyMethod();
+        });
+});
 
 //swagger
 builder.Services.AddSwaggerService();
@@ -36,6 +47,8 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
     });
 }
+
+app.UseCors("");
 
 //app.UseHttpsRedirection();
 
