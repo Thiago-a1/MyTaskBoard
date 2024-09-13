@@ -6,7 +6,7 @@ namespace MyTaskBoard.API.DTOs.Requests;
 
 public class LoginRequest
 {
-    [JsonPropertyName("User_Email")]
+    [JsonPropertyName("User_E-mail")]
     [Required(ErrorMessage = "O E-email é obrigatorio.")]
     [EmailAddress, EmailValidator(ErrorMessage = "E-mail invalido.")]
     public required string Email { get; set; }
