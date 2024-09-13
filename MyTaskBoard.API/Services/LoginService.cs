@@ -53,4 +53,16 @@ public class LoginService : ILoginService
             };
         }
     }
+
+    public ResponseModel<object> VerifyToken(VerifyTokenRequest request)
+    {
+        bool result = TokenRepository.VerifyToken(request.Token);
+
+        return new ResponseModel<object>
+        {
+            Data = [],
+            Message = result ? "Token Valido." : "Token Invalido.",
+            Status = result 
+        };
+    }
 }

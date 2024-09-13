@@ -17,7 +17,7 @@ public class TokenRepository
                 new Claim("Id", Id),
                 new Claim(ClaimTypes.Role, LoginType)
             }),
-            Expires = DateTime.UtcNow.AddHours(2),
+            Expires = DateTime.UtcNow.AddMinutes(5),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
 
@@ -29,6 +29,31 @@ public class TokenRepository
         {
             token = tokenString,
         };
+    }
+
+    public static bool VerifyToken(string JWTToken)
+    {
+        var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("ASPNET_SECRET_KEY")!);
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        try
+        {
+            tokenHandler.ValidateToken(JWTToken, new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ClockSkew = TimeSpan.Zero
+            }, out SecurityToken validatedToken);
+
+            return true;
+        }
+        catch 
+        {
+            return false;
+        }
     }
 
     public static Guid TakeIdByToken(string JWTToken)

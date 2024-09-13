@@ -6,4 +6,5 @@ namespace MyTaskBoard.API.Services;
 public interface ILoginService
 {
     public Task<ResponseModel<object>> LoginUser(LoginRequest request);
+    public ResponseModel<object> VerifyToken(VerifyTokenRequest token); 
 }
